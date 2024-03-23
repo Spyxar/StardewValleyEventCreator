@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:svec/extension/list_extension.dart';
 import 'package:svec/widget/svec_multi_input.dart';
 
 class SvecReactiveMultiInput extends StatelessWidget {
@@ -58,9 +59,10 @@ class SvecReactiveMultiInput extends StatelessWidget {
                   ),
                 );
               }
+
               return Row(
                 children: [
-                  ...fields,
+                  ...fields.separateList(const SizedBox(width: 7)),
                 ],
               );
             },

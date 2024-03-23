@@ -60,6 +60,7 @@ class SvecReactiveArray extends StatelessWidget {
               return Column(
                 children: [
                   ...fields,
+                  const SizedBox(height: 4),
                   ElevatedButton(
                     onPressed: () {
                       control.add(
