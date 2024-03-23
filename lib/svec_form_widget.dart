@@ -382,7 +382,7 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(output),
+                SelectableText(output),
               ],
             ),
           ),
