@@ -7,7 +7,7 @@ class SvecMultiInput<T> extends FormArray<T> {
 
   Type get genericType => T;
 
-  late String Function(Object value, String magicLetter)? parseValue;
+  late String Function(List<AbstractControl<dynamic>> controls, String magicLetter)? parseValue;
 
   SvecMultiInput(
     super.controls, {
@@ -17,8 +17,12 @@ class SvecMultiInput<T> extends FormArray<T> {
     super.disabled,
     required this.label,
     required this.outputMagicLetter,
-    String Function(Object value, String magicLetter)? parseValue,
+    String Function(List<AbstractControl<dynamic>> controls, String magicLetter)? parseValue,
   }) {
-    this.parseValue = parseValue ?? (value, outputMagicLetter) => "$outputMagicLetter ${value.toString()}";
+    List<String> values = [];
+    for (AbstractControl<dynamic> control in controls) {
+      values.add(control.value.toString());
+    }
+    this.parseValue = parseValue ?? (controls, outputMagicLetter) => "$outputMagicLetter ${values.join(" ")}";
   }
 }

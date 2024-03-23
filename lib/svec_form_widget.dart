@@ -104,7 +104,6 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
       //  a <x> <y>
       //  f <name> <points>
       //  s <id> <number> (multiple)
-      //  t <min> <max>
       //  x <id> <null/true>
       'current': FormGroup(
         {
@@ -134,8 +133,44 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
           ),
           'time': SvecMultiInput<String>(
             label: 'Time',
-            outputMagicLetter: 't',/*parseValue: (value, magicLetter) {},*/
-            [SvecFormControl<String>(outputMagicLetter: 't'), SvecFormControl<String>(outputMagicLetter: 't')],
+            outputMagicLetter: 't',
+            parseValue: (controls, magicLetter) {
+              List<String> output = [magicLetter];
+
+              int? minTime = int.tryParse(controls.first.value);
+              int? maxTime = int.tryParse(controls.elementAt(1).value);
+
+              if (minTime == null || maxTime == null) {
+                return "";
+              }
+
+              if (minTime < 600) {
+                minTime = 600;
+              } else if (minTime > 2600) {
+                minTime = 2600;
+              }
+              if (maxTime < 600) {
+                maxTime = 600;
+              } else if (maxTime > 2600) {
+                maxTime = 2600;
+              }
+
+              //ToDo: Show error
+              if (minTime > maxTime) {
+                return "";
+              } else if (maxTime < minTime) {
+                return "";
+              }
+
+              output.add(minTime.toString());
+              output.add(maxTime.toString());
+
+              return output.join(" ");
+            },
+            [
+              SvecFormControl<String>(outputMagicLetter: 't'),
+              SvecFormControl<String>(outputMagicLetter: 't'),
+            ],
           ),
           'npcInLocation': SvecFormControl<String>.labeled(label: 'NPC in location', outputMagicLetter: 'p'),
           //ToDo: small caveat:
@@ -227,9 +262,7 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
         },
       ),
       'action': FormGroup(
-        {
-
-        },
+        {},
       ),
     },
   );
@@ -327,6 +360,8 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
           continue;
         }
         output.add(control.parseValue!(control.value, control.outputMagicLetter));
+      } else if (control is SvecMultiInput) {
+        output.add(control.parseValue!(control.controls, control.outputMagicLetter));
       }
     }
     return output;
