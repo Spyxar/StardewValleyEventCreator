@@ -12,6 +12,7 @@ import 'package:svec/widget/reactive/svec_form_control.dart';
 import 'package:svec/svec_form_card_widget.dart';
 import 'package:svec/widget/svec_multi_input.dart';
 import 'package:svec/widget/reactive/svec_reactive_text_field.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'enum/season.dart';
 import 'enum/weather.dart';
@@ -330,12 +331,16 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
   }
 
   void _onPressed() {
-    List<String?> triggers = parseControls(triggersForm.controls).where((s) => s.isNotEmpty).toList();
-    List<String?> actions = [];
+    try {
+      List<String?> triggers = parseControls(triggersForm.controls).where((s) => s.isNotEmpty).toList();
+      List<String?> actions = [];
 
-    String output = '"${triggers.join('/')}": "${actions.join('/')}"';
+      String output = '"${triggers.join('/')}": "${actions.join('/')}"';
 
-    _showOutputDialog(output);
+      _showOutputDialog(output);
+    } catch (exception, stack) {
+      _showErrorDialog(exception.toString(), stack.toString());
+    }
   }
 
   List<String> parseControls(Map<String, AbstractControl<Object?>> controls) {
@@ -392,6 +397,46 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
                 Navigator.of(context).pop();
               },
               child: const Text('Copy'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showErrorDialog(String error, String stackTrace) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('An error occurred'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                //These are one widget to avoid weird behaviour when selecting
+                SelectableText("Error: $error\nStacktrace:\n$stackTrace"),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton.icon(
+              onPressed: () async {
+                if (!await launchUrl(Uri.parse("https://github.com/Spyxar/StardewValleyEventCreator/issues"))) {
+                  throw Exception('Failed to open the issue tracker.');
+                }
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              },
+              label: const Text('Report issue'),
+              icon: const Icon(Icons.launch),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ok'),
             ),
           ],
         );
