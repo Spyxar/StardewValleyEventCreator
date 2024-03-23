@@ -137,8 +137,8 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
             parseValue: (controls, magicLetter) {
               List<String> output = [magicLetter];
 
-              int? minTime = int.tryParse(controls.first.value);
-              int? maxTime = int.tryParse(controls.elementAt(1).value);
+              int? minTime = int.tryParse(controls.first.value ?? "");
+              int? maxTime = int.tryParse(controls.elementAt(1).value ?? "");
 
               if (minTime == null || maxTime == null) {
                 return "";
