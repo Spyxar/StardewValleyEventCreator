@@ -39,8 +39,8 @@ class SvecApp extends StatelessWidget {
       validationMessages: {
         ValidationMessage.required: (error) => 'Field can not be empty',
         ValidationMessage.number: (error) => 'Field must contain an integer',
-        "doubleLimit": (error) => 'Number exceeds ${(error as Map)['maxValue']}',
-        "doubleLimitNotPositive": (error) => 'Number is not positive',
+        'doubleLimit': (error) => 'Number exceeds ${(error as Map)['maxValue']}',
+        'doubleLimitNotPositive': (error) => 'Number is not positive',
       },
       child: MaterialApp(
         title: 'SVEC',
