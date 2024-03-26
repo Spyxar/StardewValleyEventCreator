@@ -30,8 +30,23 @@ void main() {
   runApp(const SvecApp());
 }
 
-class SvecApp extends StatelessWidget {
+class SvecApp extends StatefulWidget {
   const SvecApp({super.key});
+
+  @override
+  State<StatefulWidget> createState() => SvecAppState();
+
+  static SvecAppState? of(BuildContext context) => context.findAncestorStateOfType<SvecAppState>();
+}
+
+class SvecAppState extends State<SvecApp> {
+  ThemeMode _themeMode = sharedPreferences.getBool('lightMode') ?? false ? ThemeMode.light : ThemeMode.dark;
+
+  void changeTheme(ThemeMode themeMode) {
+    setState(() {
+      _themeMode = themeMode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +59,7 @@ class SvecApp extends StatelessWidget {
       },
       child: MaterialApp(
         title: 'SVEC',
+        themeMode: _themeMode,
         theme: lightTheme,
         darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,

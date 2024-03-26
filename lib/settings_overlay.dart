@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:svec/main.dart';
 import 'package:svec/shared_app_preferences.dart';
 
 class SettingsOverlay extends ModalRoute<void> {
@@ -11,7 +12,7 @@ class SettingsOverlay extends ModalRoute<void> {
   bool get opaque => false;
 
   @override
-  String get barrierLabel => "";
+  String get barrierLabel => '';
 
   @override
   bool get barrierDismissible => false;
@@ -22,15 +23,14 @@ class SettingsOverlay extends ModalRoute<void> {
   @override
   bool get maintainState => true;
 
-  late final SharedPreferences _preferences;
-  late final _prefsFuture = SharedPreferences.getInstance().then((value) => _preferences = value);
+  late final _preferencesFuture = SharedPreferences.getInstance();
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
     return Material(
       type: MaterialType.transparency,
       child: FutureBuilder(
-        future: _prefsFuture,
+        future: _preferencesFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return _buildOverlayContent(context);
@@ -42,32 +42,33 @@ class SettingsOverlay extends ModalRoute<void> {
   }
 
   final preferencesForm = FormGroup({
-    'stringStronk': FormControl<String>(value: sharedPreferences.getString('stringStronk') ?? ''),
+    'lightMode': FormControl<bool>(value: sharedPreferences.getBool('lightMode') ?? false),
   });
 
+  final MaterialStateProperty<Icon?> _themeThumbIcon = MaterialStateProperty.resolveWith<Icon?>(
+    (Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.sunny);
+      }
+      return const Icon(Icons.nights_stay_sharp);
+    },
+  );
+
   Widget _buildOverlayContent(BuildContext context) {
-    // return Center(
-    //   child: Column(
-    //     mainAxisSize: MainAxisSize.min,
-    //     children: <Widget>[
-    //       Column(children: [
-    //
-    //       ],),
-    //       ElevatedButton(
-    //         onPressed: () {
-    //           Navigator.pop(context);
-    //         },
-    //         child: const Text('Save'),
-    //       )
-    //     ],
-    //   ),
-    // );
     return ReactiveForm(
       formGroup: preferencesForm,
       child: Column(
         children: <Widget>[
-          ReactiveTextField(
-            formControlName: 'stringStronk',
+          ReactiveSwitch(
+            formControlName: 'lightMode',
+            thumbIcon: _themeThumbIcon,
+            onChanged: (toggle) {
+              if (toggle.value ?? false) {
+                SvecApp.of(context)!.changeTheme(ThemeMode.light);
+              } else {
+                SvecApp.of(context)!.changeTheme(ThemeMode.dark);
+              }
+            },
           ),
           ReactiveFormConsumer(
             builder: (context, form, child) {
@@ -76,7 +77,7 @@ class SettingsOverlay extends ModalRoute<void> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (form.valid) {
-                      _onPressed(form);
+                      _savePreferences(form);
                       Navigator.pop(context);
                     }
                   },
@@ -90,10 +91,22 @@ class SettingsOverlay extends ModalRoute<void> {
     );
   }
 
-  //Todo
-  void _onPressed(FormGroup form) {
+  void _savePreferences(FormGroup form) {
     for (String controlName in form.controls.keys) {
-      sharedPreferences.setString(controlName, form.control(controlName).value);
+      switch (form.control(controlName).value.runtimeType) {
+        case const (String):
+          sharedPreferences.setString(controlName, form.control(controlName).value);
+        case const (List<String>):
+          sharedPreferences.setStringList(controlName, form.control(controlName).value);
+        case const (int):
+          sharedPreferences.setInt(controlName, form.control(controlName).value);
+        case const (double):
+          sharedPreferences.setDouble(controlName, form.control(controlName).value);
+        case const (bool):
+          sharedPreferences.setBool(controlName, form.control(controlName).value);
+        default:
+          throw UnimplementedError('Failed to save preference that is of type $runtimeType');
+      }
     }
   }
 
