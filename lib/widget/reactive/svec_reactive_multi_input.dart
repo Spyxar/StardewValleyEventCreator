@@ -36,11 +36,12 @@ class SvecReactiveMultiInput extends StatelessWidget {
     );
   }
 
+  //ToDo: Allow types other than String
   List<Widget> _generateWidgetsForControlName() {
     List<Widget> widgets = [];
     AbstractControl control = form.control(formControlName);
     if (control is! SvecMultiInput) {
-      throw ArgumentError("Passed control was not a SvecMultiInput.");
+      throw ArgumentError('Passed control was not a SvecMultiInput.');
     }
     Type type = control.genericType;
     switch (type) {
@@ -69,7 +70,7 @@ class SvecReactiveMultiInput extends StatelessWidget {
           ),
         );
       default:
-        throw UnsupportedError("Failed to create a SvecReactiveMultiInput for type $type.");
+        throw UnsupportedError('Failed to create a SvecReactiveMultiInput for type $type.');
     }
     return widgets;
   }

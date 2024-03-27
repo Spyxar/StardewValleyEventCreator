@@ -102,7 +102,6 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
         },
       ),
       //ToDo:
-      //  a <x> <y>
       //  f <name> <points>
       //  s <id> <number> (multiple)
       //  x <id> <null/true>
@@ -138,11 +137,11 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
             parseValue: (controls, magicLetter) {
               List<String> output = [magicLetter];
 
-              int? minTime = int.tryParse(controls.first.value ?? "");
-              int? maxTime = int.tryParse(controls.elementAt(1).value ?? "");
+              int? minTime = int.tryParse(controls.first.value ?? '');
+              int? maxTime = int.tryParse(controls.elementAt(1).value ?? '');
 
               if (minTime == null || maxTime == null) {
-                return "";
+                return '';
               }
 
               if (minTime < 600) {
@@ -158,19 +157,28 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
 
               //ToDo: Show error
               if (minTime > maxTime) {
-                return "";
+                return '';
               } else if (maxTime < minTime) {
-                return "";
+                return '';
               }
 
               output.add(minTime.toString());
               output.add(maxTime.toString());
 
-              return output.join(" ");
+              return output.join(' ');
             },
             [
               SvecFormControl<String>(outputMagicLetter: 't'),
               SvecFormControl<String>(outputMagicLetter: 't'),
+            ],
+          ),
+          'enteredOnTile': SvecMultiInput<String>(
+            label: 'Entered on tile',
+            outputMagicLetter: 'a',
+            parseValue: Parsers.multiInputIntegerNoneNullParser,
+            [
+              SvecFormControl<String>(outputMagicLetter: 'a'),
+              SvecFormControl<String>(outputMagicLetter: 'a'),
             ],
           ),
           'npcInLocation': SvecFormControl<String>.labeled(label: 'NPC in location', outputMagicLetter: 'p'),
@@ -415,14 +423,14 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
             child: ListBody(
               children: <Widget>[
                 //These are one widget to avoid weird behaviour when selecting
-                SelectableText("Error: $error\nStacktrace:\n$stackTrace"),
+                SelectableText('Error: $error\nStacktrace:\n$stackTrace'),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton.icon(
               onPressed: () async {
-                if (!await launchUrl(Uri.parse("https://github.com/Spyxar/StardewValleyEventCreator/issues"))) {
+                if (!await launchUrl(Uri.parse('https://github.com/Spyxar/StardewValleyEventCreator/issues'))) {
                   throw Exception('Failed to open the issue tracker.');
                 }
                 if (context.mounted) {
