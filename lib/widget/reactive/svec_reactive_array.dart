@@ -40,7 +40,7 @@ class SvecReactiveArray extends StatelessWidget {
     List<Widget> widgets = [];
     AbstractControl control = form.control(formControlName);
     if (control is! SvecFormArray) {
-      throw ArgumentError("Passed control was not a SvecFormArray.");
+      throw ArgumentError('Passed control was not a SvecFormArray.');
     }
     Type type = control.genericType;
     switch (type) {
@@ -67,7 +67,7 @@ class SvecReactiveArray extends StatelessWidget {
                         FormControl<String>(),
                       );
                     },
-                    child: const Text("Add"),
+                    child: const Text('Add'),
                   )
                 ],
               );
@@ -75,7 +75,7 @@ class SvecReactiveArray extends StatelessWidget {
           ),
         );
       default:
-        throw UnsupportedError("Failed to create a SvecReactiveArray for type that is not String.");
+        throw UnsupportedError('Failed to create a SvecReactiveArray for type that is not String.');
     }
     return widgets;
   }

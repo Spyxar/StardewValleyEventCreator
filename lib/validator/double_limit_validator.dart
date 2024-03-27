@@ -13,15 +13,15 @@ class DoubleLimitValidator extends Validator {
     }
     if (control.value is! double || control.value > maxValue) {
       return <String, dynamic>{
-        "doubleLimit": <String, dynamic>{
-          "maxValue": maxValue,
+        'doubleLimit': <String, dynamic>{
+          'maxValue': maxValue,
         },
       };
     }
 
     if (positiveOnly && control.value < 0) {
       return <String, dynamic>{
-        "doubleLimitNotPositive": true,
+        'doubleLimitNotPositive': true,
       };
     }
 

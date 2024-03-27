@@ -1,8 +1,8 @@
 import 'package:svec/enum/proper_name_enum.dart';
 
 enum Gender implements IProperNameEnum {
-  male("Male", "male"),
-  female("Female", "female");
+  male('Male', 'male'),
+  female('Female', 'female');
 
   @override
   final String displayLabel;

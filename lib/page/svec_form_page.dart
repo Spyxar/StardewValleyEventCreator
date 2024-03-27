@@ -37,21 +37,21 @@ class _SvecHomePageState extends State<SvecFormPage> {
             title: const Text('Stardew Wiki'),
             trailing: const Icon(Icons.launch),
             onTap: () async {
-              _launchUrl("https://stardewvalleywiki.com/Modding:Index");
+              _launchUrl('https://stardewvalleywiki.com/Modding:Index');
             },
           ),
           ListTile(
             title: const Text('The Great ID Spreadsheet'),
             trailing: const Icon(Icons.launch),
             onTap: () async {
-              _launchUrl("https://docs.google.com/spreadsheets/d/1CpDrw23peQiq-C7F2FjYOMePaYe0Rc9BwQsj3h6sjyo");
+              _launchUrl('https://docs.google.com/spreadsheets/d/1CpDrw23peQiq-C7F2FjYOMePaYe0Rc9BwQsj3h6sjyo');
             },
           ),
           ListTile(
             title: const Text('My Discord'),
             trailing: const Icon(Icons.launch),
             onTap: () async {
-              _launchUrl("https://discord.com/invite/EPFcHVjK8p");
+              _launchUrl('https://discord.com/invite/EPFcHVjK8p');
             },
           ),
           ListTile(

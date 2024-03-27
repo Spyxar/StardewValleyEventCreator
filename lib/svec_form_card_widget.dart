@@ -70,7 +70,7 @@ class _SvecFormCardWidgetState extends State<SvecFormCardWidget> {
       );
     }
     if (control is! SvecFormControl) {
-      throw ArgumentError("Passed control was not a SvecFormControl, SvecFormArray or SvecMultiInput.");
+      throw ArgumentError('Passed control was not a SvecFormControl, SvecFormArray or SvecMultiInput.');
     }
     Type type = control.genericType;
     switch (type) {
@@ -94,7 +94,7 @@ class _SvecFormCardWidgetState extends State<SvecFormCardWidget> {
           controlName: controlName,
         );
       default:
-        throw UnimplementedError("Failed to create a field for type ${type.toString()}, not implemented");
+        throw UnimplementedError('Failed to create a field for type ${type.toString()}, not implemented');
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:reactive_forms/reactive_forms.dart';
 
 class SvecFormControl<T> extends FormControl<T> {
-  late String label = "Missing Label";
+  late String label = 'Missing Label';
 
   final String outputMagicLetter;
 
@@ -19,7 +19,7 @@ class SvecFormControl<T> extends FormControl<T> {
     required this.outputMagicLetter,
     String Function(Object value, String magicLetter)? parseValue,
   }) {
-    this.parseValue = parseValue ?? (value, outputMagicLetter) => "$outputMagicLetter ${value.toString()}";
+    this.parseValue = parseValue ?? (value, outputMagicLetter) => '$outputMagicLetter ${value.toString()}';
   }
 
   SvecFormControl.labeled({
@@ -33,6 +33,6 @@ class SvecFormControl<T> extends FormControl<T> {
     required this.label,
     String Function(Object value, String magicLetter)? parseValue,
   }) {
-    this.parseValue = parseValue ?? (value, outputMagicLetter) => "$outputMagicLetter ${value.toString()}";
+    this.parseValue = parseValue ?? (value, outputMagicLetter) => '$outputMagicLetter ${value.toString()}';
   }
 }

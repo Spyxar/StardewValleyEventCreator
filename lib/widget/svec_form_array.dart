@@ -19,6 +19,6 @@ class SvecFormArray<T> extends FormArray<T> {
     required this.outputMagicLetter,
     String Function(Object value, String magicLetter)? parseValue,
   }) {
-    this.parseValue = parseValue ?? (value, outputMagicLetter) => "$outputMagicLetter ${value.toString()}";
+    this.parseValue = parseValue ?? (value, outputMagicLetter) => '$outputMagicLetter ${value.toString()}';
   }
 }

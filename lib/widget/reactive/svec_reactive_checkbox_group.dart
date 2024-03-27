@@ -41,7 +41,7 @@ class SvecReactiveCheckboxGroup extends StatelessWidget {
     List<Widget> widgets = [];
     AbstractControl control = form.control(formControlName);
     if (control is! SvecFormControl) {
-      throw ArgumentError("Passed control was not a SvecFormControl.");
+      throw ArgumentError('Passed control was not a SvecFormControl.');
     }
     Type type = control.genericType;
     switch (type) {
@@ -58,7 +58,7 @@ class SvecReactiveCheckboxGroup extends StatelessWidget {
           }),
         );
       default:
-        throw UnsupportedError("Failed to create a SvecReactiveCheckboxGroup for type that is not bool or List<CheckboxElement>.");
+        throw UnsupportedError('Failed to create a SvecReactiveCheckboxGroup for type that is not bool or List<CheckboxElement>.');
     }
     return widgets;
   }

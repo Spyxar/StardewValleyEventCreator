@@ -1,8 +1,8 @@
 import 'package:svec/enum/proper_name_enum.dart';
 
 enum Weather implements IProperNameEnum {
-  sunny("Sunny", "sunny"),
-  rainy("Rainy", "rainy");
+  sunny('Sunny', 'sunny'),
+  rainy('Rainy', 'rainy');
 
   @override
   final String displayLabel;
