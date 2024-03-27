@@ -70,7 +70,7 @@ class _SvecFormCardWidgetState extends State<SvecFormCardWidget> {
       );
     }
     if (control is! SvecFormControl) {
-      throw ArgumentError("Passed control was not a SvecFormControl or SvecFormArray.");
+      throw ArgumentError("Passed control was not a SvecFormControl, SvecFormArray or SvecMultiInput.");
     }
     Type type = control.genericType;
     switch (type) {
