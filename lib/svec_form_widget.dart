@@ -340,7 +340,7 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
 
   void _onPressed() {
     try {
-      List<String?> triggers = parseControls(triggersForm.controls).where((s) => s.isNotEmpty).toList();
+      List<String?> triggers = parseControls(triggersForm.controls).where((s) => s.isNotEmpty).map((s) => s.trim()).toList();
       List<String?> actions = [];
 
       String output = '"${triggers.join('/')}": "${actions.join('/')}"';
