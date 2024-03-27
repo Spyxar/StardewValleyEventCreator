@@ -19,10 +19,9 @@ class SvecMultiInput<T> extends FormArray<T> {
     required this.outputMagicLetter,
     String Function(List<AbstractControl<dynamic>> controls, String magicLetter)? parseValue,
   }) {
-    List<String> values = [];
-    for (AbstractControl<dynamic> control in controls) {
-      values.add(control.value.toString());
-    }
-    this.parseValue = parseValue ?? (controls, outputMagicLetter) => "$outputMagicLetter ${values.join(" ")}";
+    this.parseValue = parseValue ?? (controls, outputMagicLetter) {
+      List<String> values = [outputMagicLetter, ...controls.map((control) => control.value)];
+      return values.join(' ').trim();
+    };
   }
 }
