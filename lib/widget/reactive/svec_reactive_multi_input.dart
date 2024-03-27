@@ -69,7 +69,7 @@ class SvecReactiveMultiInput extends StatelessWidget {
           ),
         );
       default:
-        throw UnsupportedError("Failed to create a SvecReactiveMultiInput for type that is not String.");
+        throw UnsupportedError("Failed to create a SvecReactiveMultiInput for type $type.");
     }
     return widgets;
   }
