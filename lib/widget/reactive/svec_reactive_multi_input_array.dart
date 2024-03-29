@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:svec/extension/list_extension.dart';
 import 'package:svec/widget/reactive/svec_form_control.dart';
-import 'package:svec/widget/reactive/svec_multi_input_array.dart';
+import 'package:svec/widget/svec_multi_input_array.dart';
 import 'package:svec/widget/svec_multi_input.dart';
 
 //ToDo: Replace 'Add'-button with 'ghostrows' - auto-create new row when typing in last one

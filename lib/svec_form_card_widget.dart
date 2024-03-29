@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:svec/checkbox.dart';
 import 'package:svec/svec_form_widget.dart';
-import 'package:svec/widget/reactive/svec_multi_input_array.dart';
+import 'package:svec/widget/svec_multi_input_array.dart';
 import 'package:svec/widget/reactive/svec_reactive_checkbox_group.dart';
 import 'package:svec/widget/reactive/svec_reactive_multi_input_array.dart';
 import 'package:svec/widget/svec_form_array.dart';

@@ -7,7 +7,7 @@ import 'package:svec/enum/gender.dart';
 import 'package:svec/enum/pet.dart';
 import 'package:svec/validator/double_limit_validator.dart';
 import 'package:svec/enum/day.dart';
-import 'package:svec/widget/reactive/svec_multi_input_array.dart';
+import 'package:svec/widget/svec_multi_input_array.dart';
 import 'package:svec/widget/svec_form_array.dart';
 import 'package:svec/widget/reactive/svec_form_control.dart';
 import 'package:svec/svec_form_card_widget.dart';
