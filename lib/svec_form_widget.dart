@@ -7,6 +7,7 @@ import 'package:svec/enum/gender.dart';
 import 'package:svec/enum/pet.dart';
 import 'package:svec/validator/double_limit_validator.dart';
 import 'package:svec/enum/day.dart';
+import 'package:svec/widget/reactive/svec_multi_input_array.dart';
 import 'package:svec/widget/svec_form_array.dart';
 import 'package:svec/widget/reactive/svec_form_control.dart';
 import 'package:svec/svec_form_card_widget.dart';
@@ -101,12 +102,58 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
           'specialDialogueNotOngoing': SvecFormControl<String>.labeled(label: 'Special dialogue not in progress', outputMagicLetter: 'A'),
         },
       ),
-      //ToDo:
-      //  f <name> <points>
-      //  s <id> <number> (multiple)
-      //  x <id> <null/true>
       'current': FormGroup(
         {
+          'sendLetter': SvecMultiInput<dynamic>(
+            label: 'Send Letter',
+            outputMagicLetter: 'x',
+            parseValue: (controls, magicLetter) {
+              List<String> values = [magicLetter];
+
+              if (controls.first.value == null || controls.first.value == '') {
+                return '';
+              }
+              values.add(controls.first.value);
+
+              if (controls.last.value == true) {
+                values.add('true');
+              }
+
+              return values.join(' ').trim();
+            },
+            [
+              SvecFormControl<String>(outputMagicLetter: 'x'),
+              SvecFormControl<bool>(outputMagicLetter: 'x'),
+            ],
+          ),
+          'friendship': SvecMultiInputArray<String>(
+            label: 'Friendship',
+            outputMagicLetter: 'f',
+            multiInputControls: [
+              SvecMultiInput<String>(
+                label: '',
+                outputMagicLetter: 'f',
+                [
+                  SvecFormControl<String>(outputMagicLetter: 'f'),
+                  SvecFormControl<String>(outputMagicLetter: 'f'),
+                ],
+              ),
+            ],
+          ),
+          'itemsShipped': SvecMultiInputArray<String>(
+            label: 'Items Shipped',
+            outputMagicLetter: 's',
+            multiInputControls: [
+              SvecMultiInput<String>(
+                label: '',
+                outputMagicLetter: 's',
+                [
+                  SvecFormControl<String>(outputMagicLetter: 's'),
+                  SvecFormControl<String>(outputMagicLetter: 's'),
+                ],
+              ),
+            ],
+          ),
           'dating': SvecFormControl<String>.labeled(label: 'Dating', outputMagicLetter: 'D'),
           'marriedTo': SvecFormControl<String>.labeled(label: 'Married to', outputMagicLetter: 'O'),
           'notMarriedTo': SvecFormControl<String>.labeled(label: 'Not married to', outputMagicLetter: 'o'),
@@ -375,6 +422,8 @@ class _SvecFormWidgetState extends State<SvecFormWidget> {
         output.add(control.parseValue!(control.value, control.outputMagicLetter));
       } else if (control is SvecMultiInput) {
         output.add(control.parseValue!(control.controls, control.outputMagicLetter));
+      } else if (control is SvecMultiInputArray) {
+        output.add(control.parseValue!(control.multiInputControls, control.outputMagicLetter));
       }
     }
     return output;

@@ -3,7 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:svec/checkbox.dart';
 import 'package:svec/svec_form_widget.dart';
+import 'package:svec/widget/reactive/svec_multi_input_array.dart';
 import 'package:svec/widget/reactive/svec_reactive_checkbox_group.dart';
+import 'package:svec/widget/reactive/svec_reactive_multi_input_array.dart';
 import 'package:svec/widget/svec_form_array.dart';
 import 'package:svec/widget/svec_multi_input.dart';
 import 'package:svec/widget/reactive/svec_reactive_array.dart';
@@ -68,6 +70,12 @@ class _SvecFormCardWidgetState extends State<SvecFormCardWidget> {
         form: widget.form,
         formControlName: controlName,
       );
+    } else if (control is SvecMultiInputArray) {
+      return SvecReactiveMultiArray(
+        label: control.label,
+        form: widget.form,
+        formControlName: controlName,
+      );
     }
     if (control is! SvecFormControl) {
       throw ArgumentError('Passed control was not a SvecFormControl, SvecFormArray or SvecMultiInput.');
@@ -94,7 +102,7 @@ class _SvecFormCardWidgetState extends State<SvecFormCardWidget> {
           controlName: controlName,
         );
       default:
-        throw UnimplementedError('Failed to create a field for type ${type.toString()}, not implemented');
+        throw UnimplementedError('Failed to create a field for type $type, not implemented');
     }
   }
 }
